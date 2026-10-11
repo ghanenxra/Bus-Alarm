@@ -72,3 +72,4 @@ class AppTokens {
     letterSpacing: 0.2,
   );
 }
+

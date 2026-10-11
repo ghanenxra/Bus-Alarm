@@ -216,3 +216,4 @@ async def delete_geofence(
 
     await db.delete(fence)
     await db.commit()
+

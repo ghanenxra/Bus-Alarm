@@ -85,3 +85,4 @@ class FCMService:
 
         logger.info(f"Test notification dispatched to device {device.id} (FCM: {token[:10]}...)")
         return True
+

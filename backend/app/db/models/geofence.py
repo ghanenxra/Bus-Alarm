@@ -83,3 +83,4 @@ class Geofence(Base, TimestampMixin):
         CheckConstraint("radius_meters >= 30 AND radius_meters <= 2000", name="chk_geofence_radius"),
         Index("ix_geofences_session_enabled", "session_id", "enabled"),
     )
+

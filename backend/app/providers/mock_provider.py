@@ -84,3 +84,4 @@ class MockBlackbuckProvider(BaseProvider):
             heading_degrees=45.0,
             is_live=True,
         )
+

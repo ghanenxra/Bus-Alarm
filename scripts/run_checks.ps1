@@ -7,3 +7,4 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 Write-Host "All backend checks passed successfully."
+

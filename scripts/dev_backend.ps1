@@ -2,3 +2,4 @@
 Write-Host "Starting Bus Alarm backend server..."
 Set-Location -Path "$PSScriptRoot\..\backend"
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+

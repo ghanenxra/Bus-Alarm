@@ -50,3 +50,4 @@ async def get_authenticated_device(
 ) -> Device:
     """Dependency for routes with {device_id} in URL path."""
     return await verify_device_access(db, device_id, x_device_secret)
+

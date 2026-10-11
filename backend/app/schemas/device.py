@@ -22,3 +22,4 @@ class FCMTokenUpdateRequest(BaseModel):
 
 class FCMTokenUpdateResponse(BaseModel):
     updated: bool = True
+

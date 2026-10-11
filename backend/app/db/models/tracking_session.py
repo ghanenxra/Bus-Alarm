@@ -84,3 +84,4 @@ class TrackingSession(Base, TimestampMixin):
     __table_args__ = (
         Index("ix_tracking_sessions_device_status", "device_id", "status"),
     )
+

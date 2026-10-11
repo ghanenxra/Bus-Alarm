@@ -63,3 +63,4 @@ class BaseProvider(ABC):
     def normalize_error(self, exc: Exception) -> ProviderError:
         """Map provider-specific HTTP/JSON exceptions into standardized ProviderError."""
         pass
+

@@ -122,3 +122,4 @@ async def test_alerts_and_acknowledgement(client: AsyncClient, db_session: Async
     )
     assert snooze_resp.status_code == 200
     assert snooze_resp.json()["action"] == "snooze"
+

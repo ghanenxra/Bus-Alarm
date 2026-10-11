@@ -53,3 +53,4 @@ async def system_status(db: AsyncSession = Depends(get_db)) -> SystemStatusRespo
         active_sessions_count=active_count,
         timestamp=datetime.now(timezone.utc),
     )
+

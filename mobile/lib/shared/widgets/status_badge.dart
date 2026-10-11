@@ -68,3 +68,4 @@ class StatusBadge extends StatelessWidget {
     );
   }
 }
+

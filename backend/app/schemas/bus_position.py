@@ -13,3 +13,4 @@ class BusPositionResponse(BaseModel):
     speed_mps: Optional[float] = None
     heading_degrees: Optional[float] = None
     freshness_seconds: int = Field(default=0, description="Seconds elapsed since observed_at")
+

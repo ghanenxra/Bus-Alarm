@@ -99,3 +99,4 @@ def test_segment_passing_outside_radius():
     )
     assert result.is_triggered is False
     assert result.distance_meters > 500.0
+

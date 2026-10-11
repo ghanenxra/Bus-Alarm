@@ -26,3 +26,4 @@ def test_log_redaction():
     assert "secret_jwt_token_12345" not in redacted
     assert "device_fcm_token_67890" not in redacted
     assert "[REDACTED]" in redacted
+

@@ -8,3 +8,4 @@ api_router.include_router(devices.router)
 api_router.include_router(sessions.router)
 api_router.include_router(geofences.router)
 api_router.include_router(alerts.router)
+

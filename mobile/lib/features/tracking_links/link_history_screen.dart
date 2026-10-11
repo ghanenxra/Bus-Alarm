@@ -223,3 +223,4 @@ class _LinkHistoryScreenState extends State<LinkHistoryScreen> {
     );
   }
 }
+

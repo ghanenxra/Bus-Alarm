@@ -120,3 +120,4 @@ def evaluate_crossing(
         distance_meters=curr_dist,
         reason=f"Outside geofence (dist: {curr_dist:.1f}m > {effective_radius:.1f}m)",
     )
+

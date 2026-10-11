@@ -24,3 +24,4 @@ services:
         value: true
       - key: FCM_ENABLED
         value: false
+

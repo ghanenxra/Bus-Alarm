@@ -119,3 +119,4 @@ async def acknowledge_alert(
         action=alert.user_action,
         acknowledged_at=alert.acknowledged_at,
     )
+

@@ -69,3 +69,4 @@ class Device(Base):
         back_populates="device",
         cascade="all, delete-orphan",
     )
+

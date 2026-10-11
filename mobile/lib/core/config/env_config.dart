@@ -50,3 +50,4 @@ class EnvConfig {
     await _prefs.setString('backend_url', url);
   }
 }
+

@@ -155,3 +155,4 @@ class _GeofenceListScreenState extends State<GeofenceListScreen> {
     );
   }
 }
+

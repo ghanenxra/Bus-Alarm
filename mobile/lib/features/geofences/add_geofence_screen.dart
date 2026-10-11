@@ -371,3 +371,4 @@ class _AddGeofenceScreenState extends State<AddGeofenceScreen> {
     );
   }
 }
+

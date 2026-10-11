@@ -39,3 +39,4 @@ class GeofenceResponse(BaseModel):
     last_triggered_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
+

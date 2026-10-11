@@ -34,3 +34,4 @@ class AlertEventResponse(BaseModel):
 class TestNotificationResponse(BaseModel):
     success: bool
     message: str
+

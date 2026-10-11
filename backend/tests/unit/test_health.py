@@ -33,3 +33,4 @@ async def test_system_status(client: AsyncClient):
     data = response.json()
     assert data["backend_status"] == "online"
     assert "active_sessions_count" in data
+

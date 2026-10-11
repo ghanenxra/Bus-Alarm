@@ -58,3 +58,4 @@ class BusPosition(Base):
     __table_args__ = (
         Index("ix_bus_positions_session_observed", "session_id", "observed_at"),
     )
+

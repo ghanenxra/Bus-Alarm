@@ -89,3 +89,4 @@ class AlertEvent(Base):
     __table_args__ = (
         Index("ix_alert_events_device_occurred", "device_id", "occurred_at"),
     )
+

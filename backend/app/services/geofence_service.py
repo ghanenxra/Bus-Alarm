@@ -133,3 +133,4 @@ class GeofenceService:
                         logger.error(f"Failed to dispatch push for alert {evt.id}: {str(exc)}")
 
         return triggered_events
+

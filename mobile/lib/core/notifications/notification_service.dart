@@ -114,3 +114,4 @@ class NotificationService {
     await _plugin.cancel(id);
   }
 }
+
