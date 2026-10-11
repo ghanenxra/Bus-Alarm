@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: bus-alarm-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./bus_alarm.db
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: DEVICE_AUTH_ENABLED
+        value: "true"
+      - key: ALLOWED_PROVIDER_HOSTS
+        value: '["trackgps.blackbuck.com","gps.blackbuck.com","mock.busalarm.local"]'
+    healthCheckPath: /health
