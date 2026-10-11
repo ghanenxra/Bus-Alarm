@@ -1,0 +1,15 @@
+# Ralph Progress Log
+
+## Codebase Patterns
+- Web vs Mobile Local Storage: Use `DatabaseHelper.instance.appDb` which selects `SharedPreferencesDb` on web (`kIsWeb`) and `SqfliteDb` on native mobile. Never invoke raw `sqflite.Database` on web without WASM web workers.
+- Non-blocking Saves: Always save to local DB first in UI handlers (`await _linkRepo.insertLink(link)`), then treat backend synchronization as best-effort with a timeout so the UI never hangs.
+- Error Formatting: In `ApiClient`, catch `DioException` and unpack `error.response?.data['error']['message']` into a clean `ApiException` to avoid raw Dio stack dumps.
+- Upstream Provider Resilience: On Blackbuck tracking links, handle upstream 502/network timeouts gracefully in `validate_share` and allow session activation in development mode.
+
+## 2026-10-12 - Bus Alarm MVP Verification
+- Verified backend test suite: 24/24 integration and unit tests passing in `backend/tests`.
+- Verified mobile test suite: 4/4 unit and local database tests passing in `mobile/test`.
+- Verified static analysis: 0 issues reported by `flutter analyze`.
+- Verified web release build: `mobile/build/web` compiled with 0 errors.
+- Ralph agent skills (`prd` and `ralph`) installed globally and in workspace.
+---

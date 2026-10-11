@@ -99,25 +99,33 @@ class _AddLinkScreenState extends State<AddLinkScreen> {
     );
 
     try {
-      // 1. Save locally in SQLite
+      // 1. Save locally in resilient universal local DB (works on mobile & web)
       await _linkRepo.insertLink(link);
 
-      // 2. Sync / activate with backend
+      // 2. Best-effort backend sync with strict timeout so UI never hangs
       if (activateImmediately) {
-        await _apiClient.createTrackingSession(
-          nickname: nickname,
-          shareUrl: url,
-        );
+        try {
+          await _apiClient
+              .createTrackingSession(
+                nickname: nickname,
+                shareUrl: url,
+              )
+              .timeout(const Duration(seconds: 2));
+        } catch (backendErr) {
+          debugPrint('Backend sync deferred or timed out: $backendErr');
+        }
       }
 
       if (mounted) {
         Navigator.of(context).pop(true);
       }
     } catch (e) {
-      setState(() {
-        _errorMessage = 'Failed to activate session on backend: ${e.toString()}';
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'Failed to save link locally: ${e.toString()}';
+          _isLoading = false;
+        });
+      }
     }
   }
 

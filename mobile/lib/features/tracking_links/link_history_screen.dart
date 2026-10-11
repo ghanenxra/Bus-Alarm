@@ -38,17 +38,20 @@ class _LinkHistoryScreenState extends State<LinkHistoryScreen> {
   }
 
   Future<void> _handleActivate(SavedLink link) async {
+    // 1. Immediately update active state in local database
+    final updated = link.copyWith(
+      lastKnownStatus: 'active',
+      lastActivatedAtUtc: DateTime.now().toUtc(),
+    );
+    await _linkRepo.updateLink(updated);
+    _loadLinks();
+
+    // 2. Synchronize activation with backend
     try {
       await _apiClient.createTrackingSession(
         nickname: link.nickname,
         shareUrl: link.shareUrl,
       );
-      final updated = link.copyWith(
-        lastKnownStatus: 'active',
-        lastActivatedAtUtc: DateTime.now().toUtc(),
-      );
-      await _linkRepo.updateLink(updated);
-      _loadLinks();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Activated tracking for "${link.nickname}"')),
@@ -57,7 +60,10 @@ class _LinkHistoryScreenState extends State<LinkHistoryScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to activate: ${e.toString()}')),
+          SnackBar(
+            content: Text('Active locally (backend note: ${e.toString()})'),
+            duration: const Duration(seconds: 4),
+          ),
         );
       }
     }

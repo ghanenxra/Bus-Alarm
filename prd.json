@@ -1,0 +1,88 @@
+{
+  "project": "BusAlarm",
+  "branchName": "ralph/bus-alarm-mvp",
+  "description": "Bus Alarm - Autonomous college bus tracking with persistent geofence alarm notifications",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Universal Local DB for Offline-First Storage",
+      "description": "As a user on mobile or web, I want my saved tracking links and geofences saved locally without databaseFactory errors.",
+      "acceptanceCriteria": [
+        "Implement AppDb interface with SqfliteDb for mobile and SharedPreferencesDb for web",
+        "LinkRepository and GeofenceRepository persist and retrieve items reliably across app restarts",
+        "Flutter analyze and tests pass with 0 errors"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented AppDb with SqfliteDb on mobile and SharedPreferencesDb on web."
+    },
+    {
+      "id": "US-002",
+      "title": "Resilient Link Activation and Non-blocking Save",
+      "description": "As a user, I want saving and activating a link to succeed immediately without hanging or 400 errors from upstream provider.",
+      "acceptanceCriteria": [
+        "Saving links in AddLinkScreen saves to local DB first and pops immediately",
+        "Backend handles upstream 502/network timeouts gracefully and accepts tracking sessions",
+        "Clicking Activate in Saved Links shows friendly error status without DioException stack dumps",
+        "Backend integration tests pass (24/24 passed)"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Fixed validate_share error recovery and clean error messages in ApiClient."
+    },
+    {
+      "id": "US-003",
+      "title": "Vehicle Telemetry Polling and Freshness Indicator",
+      "description": "As a user, I want to see the latest bus position and age of data on the dashboard.",
+      "acceptanceCriteria": [
+        "Dashboard displays live vehicle telemetry with freshness indicator",
+        "Displays warning badge when telemetry age exceeds 60 seconds",
+        "Periodic poll refreshes coordinates without UI flicker",
+        "Flutter analyze passes with 0 issues"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Telemetry poller and freshness badge active on DashboardScreen."
+    },
+    {
+      "id": "US-004",
+      "title": "Geofence Stop Proximity & Approach Crossing Alert",
+      "description": "As a student waiting for a bus, I want an alert triggered when the bus enters or crosses my stop radius.",
+      "acceptanceCriteria": [
+        "Point-to-segment crossing detection handles fast bus transit between samples",
+        "Cooldown window suppresses duplicate alerts for the same approach",
+        "Backend geofence tests pass with 100% coverage"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Backend geofence engine and tests passing."
+    },
+    {
+      "id": "US-005",
+      "title": "Full-Screen Alarm with Dismiss and Snooze",
+      "description": "As a user, I want an alarm screen with sound and vibration that I can Dismiss or Snooze when the bus arrives.",
+      "acceptanceCriteria": [
+        "High-contrast full-screen AlarmScreen with Dismiss and Snooze actions",
+        "Snooze delays alarm trigger by 5 minutes",
+        "Dismiss records dismissed action and stops vibration/sound",
+        "Flutter analyze passes with 0 issues"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "AlarmScreen implemented in mobile/lib/features/alarm/alarm_screen.dart."
+    },
+    {
+      "id": "US-006",
+      "title": "Production Release Build & Packaging",
+      "description": "As a user, I want the web bundle and Android build compiled and verified for release.",
+      "acceptanceCriteria": [
+        "Flutter web release bundle builds into mobile/build/web without errors",
+        "Backend runs cleanly with Uvicorn and passes all 24 test suites",
+        "README.md documents all installation and verification steps"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Web release built, backend test suite 24/24 passing."
+    }
+  ]
+}

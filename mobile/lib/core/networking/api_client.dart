@@ -1,6 +1,16 @@
 import 'package:dio/dio.dart';
 import '../config/env_config.dart';
 
+class ApiException implements Exception {
+  final String message;
+  final int? statusCode;
+
+  ApiException(this.message, [this.statusCode]);
+
+  @override
+  String toString() => message;
+}
+
 class ApiClient {
   late final Dio _dio;
 
@@ -16,6 +26,25 @@ class ApiClient {
         },
       ),
     );
+  }
+
+  static String formatDioError(DioException e) {
+    final data = e.response?.data;
+    if (data is Map) {
+      if (data['error'] is Map && data['error']['message'] != null) {
+        return data['error']['message'].toString();
+      }
+      if (data['detail'] != null) {
+        return data['detail'].toString();
+      }
+      if (data['message'] != null) {
+        return data['message'].toString();
+      }
+    }
+    if (e.message != null && e.message!.isNotEmpty) {
+      return e.message!;
+    }
+    return 'Server returned status ${e.response?.statusCode ?? 'network error'}';
   }
 
   // Health & Status
@@ -100,8 +129,10 @@ class ApiClient {
         },
       );
       return response.data;
+    } on DioException catch (e) {
+      throw ApiException(formatDioError(e), e.response?.statusCode);
     } catch (e) {
-      rethrow;
+      throw ApiException(e.toString());
     }
   }
 

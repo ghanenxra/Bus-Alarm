@@ -92,7 +92,13 @@ class TrackingPoller:
 
         try:
             token = decrypt_token(session.provider_token_encrypted)
-            position = await provider.fetch_location(token)
+            try:
+                position = await provider.fetch_location(token)
+            except Exception as prov_exc:
+                if settings.ENVIRONMENT == "development" or "mock" in session.provider:
+                    position = await self.mock_provider.fetch_location(token)
+                else:
+                    raise prov_exc
 
             # Store new position
             bus_pos = BusPosition(

@@ -4,6 +4,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, status
 from sqlalchemy import desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.core.config import settings
 from app.core.dependencies import verify_device_access
 from app.core.security import decrypt_token, encrypt_token
 from app.db.models.bus_position import BusPosition
@@ -22,7 +23,7 @@ router = APIRouter(prefix="/tracking-sessions", tags=["Tracking Sessions"])
 
 
 def _get_provider(host: str):
-    if "mock" in host:
+    if "mock" in host or "local" in host or host in ("localhost", "127.0.0.1"):
         return MockBlackbuckProvider()
     return BlackbuckProvider()
 
@@ -70,33 +71,56 @@ async def create_tracking_session(
     provider = _get_provider(share_token.host)
 
     val_result = await provider.validate_share(share_token.token)
-    if not val_result.is_valid:
+    if not val_result.is_valid and settings.ENVIRONMENT != "development":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Provider rejected tracking share link: {val_result.message}",
         )
 
-    session_id = str(uuid.uuid4())
     encrypted_token = encrypt_token(share_token.token)
 
-    session = TrackingSession(
-        id=session_id,
-        device_id=device.id,
-        nickname=payload.nickname,
-        provider="blackbuck" if "mock" not in share_token.host else "mock_blackbuck",
-        provider_token_encrypted=encrypted_token,
-        expires_at=val_result.expires_at or share_token.estimated_expires_at,
-        status="active",
-        poll_interval_seconds=payload.poll_interval_seconds,
-        last_polled_at=datetime.now(timezone.utc),
-        last_success_at=datetime.now(timezone.utc) if val_result.initial_position else None,
+    # Check for existing session with this nickname for idempotent activation
+    existing_stmt = select(TrackingSession).where(
+        TrackingSession.device_id == device.id,
+        TrackingSession.nickname == payload.nickname,
     )
-    db.add(session)
+    existing_res = await db.execute(existing_stmt)
+    existing_session = existing_res.scalar_one_or_none()
+
+    if existing_session:
+        session = existing_session
+        session.status = "active"
+        session.provider_token_encrypted = encrypted_token
+        session.poll_interval_seconds = payload.poll_interval_seconds
+        session.last_polled_at = datetime.now(timezone.utc)
+        if val_result.expires_at or share_token.estimated_expires_at:
+            session.expires_at = val_result.expires_at or share_token.estimated_expires_at
+        if val_result.initial_position:
+            session.last_success_at = datetime.now(timezone.utc)
+            session.last_error_code = None
+        else:
+            session.last_error_code = val_result.message
+    else:
+        session_id = str(uuid.uuid4())
+        session = TrackingSession(
+            id=session_id,
+            device_id=device.id,
+            nickname=payload.nickname,
+            provider="blackbuck" if "mock" not in share_token.host else "mock_blackbuck",
+            provider_token_encrypted=encrypted_token,
+            expires_at=val_result.expires_at or share_token.estimated_expires_at,
+            status="active",
+            poll_interval_seconds=payload.poll_interval_seconds,
+            last_polled_at=datetime.now(timezone.utc),
+            last_success_at=datetime.now(timezone.utc) if val_result.initial_position else None,
+            last_error_code=None if val_result.initial_position else val_result.message,
+        )
+        db.add(session)
 
     initial_pos_resp = None
     if val_result.initial_position:
         bus_pos = BusPosition(
-            session_id=session_id,
+            session_id=session.id,
             latitude=val_result.initial_position.latitude,
             longitude=val_result.initial_position.longitude,
             observed_at=val_result.initial_position.observed_at,

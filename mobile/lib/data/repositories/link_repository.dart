@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 import '../local_db/database_helper.dart';
 import '../models/saved_link.dart';
 
@@ -6,7 +5,7 @@ class LinkRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   Future<List<SavedLink>> getAllLinks() async {
-    final db = await _dbHelper.database;
+    final db = await _dbHelper.appDb;
     final result = await db.query(
       'saved_links',
       orderBy: 'is_favorite DESC, added_at_utc DESC',
@@ -15,7 +14,7 @@ class LinkRepository {
   }
 
   Future<SavedLink?> getLinkById(String id) async {
-    final db = await _dbHelper.database;
+    final db = await _dbHelper.appDb;
     final maps = await db.query(
       'saved_links',
       where: 'id = ?',
@@ -28,16 +27,15 @@ class LinkRepository {
   }
 
   Future<void> insertLink(SavedLink link) async {
-    final db = await _dbHelper.database;
+    final db = await _dbHelper.appDb;
     await db.insert(
       'saved_links',
       link.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
   Future<void> updateLink(SavedLink link) async {
-    final db = await _dbHelper.database;
+    final db = await _dbHelper.appDb;
     await db.update(
       'saved_links',
       link.toMap(),
@@ -47,7 +45,7 @@ class LinkRepository {
   }
 
   Future<void> deleteLink(String id) async {
-    final db = await _dbHelper.database;
+    final db = await _dbHelper.appDb;
     await db.delete(
       'saved_links',
       where: 'id = ?',

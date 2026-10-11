@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 from urllib.parse import parse_qs, urlparse
@@ -36,6 +37,12 @@ class BlackbuckProvider(BaseProvider):
         # Extract token from query params or path
         qs = parse_qs(parsed.query)
         token = qs.get("token", [None])[0]
+
+        if not token:
+            for param in ["id", "share", "t", "code", "trip"]:
+                if param in qs:
+                    token = qs[param][0]
+                    break
 
         if not token:
             # Fallback to path segment if token is in path
@@ -192,7 +199,6 @@ class BlackbuckProvider(BaseProvider):
 
     async def validate_share(self, token: str) -> ProviderValidationResult:
         """Query provider endpoint to confirm token validity."""
-        # For production live calls when live endpoint schema is verified
         try:
             position = await self.fetch_location(token)
             return ProviderValidationResult(
@@ -204,11 +210,14 @@ class BlackbuckProvider(BaseProvider):
             )
         except Exception as exc:
             err = self.normalize_error(exc)
+            # In development or if provider is reporting a recoverable / upstream error (502, 503, timeout, network),
+            # allow activating the session so poller worker can retry or simulate telemetry
+            can_activate = settings.ENVIRONMENT == "development" or err.is_recoverable
             return ProviderValidationResult(
-                is_valid=False,
-                status_code=400,
-                message=err.message,
-                expires_at=None,
+                is_valid=can_activate,
+                status_code=200 if can_activate else 400,
+                message=f"Provider status: {err.message}",
+                expires_at=self.get_token_expiry(token),
                 initial_position=None,
             )
 
