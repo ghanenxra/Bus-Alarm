@@ -22,7 +22,7 @@ class AppTheme {
         titleTextStyle: AppTokens.headlineMedium,
         iconTheme: IconThemeData(color: AppTokens.onBackground),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppTokens.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(

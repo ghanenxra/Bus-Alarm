@@ -30,22 +30,22 @@ class StatusBadge extends StatelessWidget {
     switch (variant) {
       case BadgeVariant.online:
       case BadgeVariant.active:
-        bg = AppTokens.success.withOpacity(0.15);
+        bg = AppTokens.success.withValues(alpha: 0.15);
         fg = AppTokens.success;
-        border = AppTokens.success.withOpacity(0.4);
+        border = AppTokens.success.withValues(alpha: 0.4);
         break;
       case BadgeVariant.waking:
       case BadgeVariant.idle:
-        bg = AppTokens.warning.withOpacity(0.15);
+        bg = AppTokens.warning.withValues(alpha: 0.15);
         fg = AppTokens.warning;
-        border = AppTokens.warning.withOpacity(0.4);
+        border = AppTokens.warning.withValues(alpha: 0.4);
         break;
       case BadgeVariant.offline:
       case BadgeVariant.expired:
       case BadgeVariant.error:
-        bg = AppTokens.error.withOpacity(0.15);
+        bg = AppTokens.error.withValues(alpha: 0.15);
         fg = AppTokens.error;
-        border = AppTokens.error.withOpacity(0.4);
+        border = AppTokens.error.withValues(alpha: 0.4);
         break;
     }
 

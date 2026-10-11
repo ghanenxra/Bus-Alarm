@@ -138,7 +138,7 @@ class _GeofenceListScreenState extends State<GeofenceListScreen> {
                             ),
                             Switch(
                               value: fence.enabled,
-                              activeColor: AppTokens.primary,
+                              activeThumbColor: AppTokens.primary,
                               onChanged: (_) => _toggleEnable(fence),
                             ),
                             IconButton(

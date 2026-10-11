@@ -8,7 +8,6 @@ import '../../data/models/saved_link.dart';
 import '../../data/repositories/geofence_repository.dart';
 import '../../data/repositories/link_repository.dart';
 import '../../shared/widgets/status_badge.dart';
-import '../alarm/alarm_screen.dart';
 import '../diagnostics/diagnostics_screen.dart';
 import '../geofences/add_geofence_screen.dart';
 import '../geofences/geofence_list_screen.dart';
@@ -336,8 +335,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: (_latestPosition!['freshness_seconds'] as int) > 60
-                                  ? AppTokens.warning.withOpacity(0.2)
-                                  : AppTokens.success.withOpacity(0.2),
+                                  ? AppTokens.warning.withValues(alpha: 0.2)
+                                  : AppTokens.success.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(AppTokens.radiusSmall),
                             ),
                             child: Text(

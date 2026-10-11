@@ -48,6 +48,8 @@ mobile/build/
 mobile/android/app/debug/
 mobile/android/app/profile/
 mobile/android/app/release/
+mobile/android/local.properties
+mobile/.metadata
 
 # IDE / OS
 .idea/

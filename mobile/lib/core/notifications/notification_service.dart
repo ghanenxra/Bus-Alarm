@@ -31,7 +31,6 @@ class NotificationService {
       channelHighPriorityName,
       description: 'Persistent alarm notifications when your bus approaches a stop',
       importance: Importance.max,
-      priority: Priority.max,
       enableVibration: true,
       playSound: true,
     );
@@ -60,7 +59,7 @@ class NotificationService {
     required double distanceMeters,
     String? alertId,
   }) async {
-    final androidDetails = AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       channelHighPriorityId,
       channelHighPriorityName,
       channelDescription: 'Persistent alarm notifications when your bus approaches a stop',
@@ -71,13 +70,13 @@ class NotificationService {
       visibility: NotificationVisibility.public,
       ongoing: true,
       autoCancel: false,
-      actions: const [
+      actions: [
         AndroidNotificationAction('dismiss_action', 'Dismiss', cancelNotification: true),
         AndroidNotificationAction('snooze_action', 'Snooze 1 min', cancelNotification: true),
       ],
     );
 
-    final notificationDetails = NotificationDetails(android: androidDetails);
+    const notificationDetails = NotificationDetails(android: androidDetails);
 
     await _plugin.show(
       id,

@@ -199,7 +199,7 @@ class _AddGeofenceScreenState extends State<AddGeofenceScreen> {
                   padding: const EdgeInsets.all(AppTokens.space12),
                   margin: const EdgeInsets.only(bottom: AppTokens.space16),
                   decoration: BoxDecoration(
-                    color: AppTokens.error.withOpacity(0.15),
+                    color: AppTokens.error.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppTokens.radiusSmall),
                     border: Border.all(color: AppTokens.error),
                   ),
@@ -264,7 +264,7 @@ class _AddGeofenceScreenState extends State<AddGeofenceScreen> {
                               circles: [
                                 CircleMarker(
                                   point: _selectedPoint,
-                                  color: AppTokens.primary.withOpacity(0.25),
+                                  color: AppTokens.primary.withValues(alpha: 0.25),
                                   borderColor: AppTokens.primary,
                                   borderStrokeWidth: 2.0,
                                   radius: _radiusMeters,

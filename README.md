@@ -143,4 +143,3 @@ This guarantees that retries and GPS jitter across boundary boundaries never tri
    - `DATABASE_SYNC_URL`: `postgresql://user:pass@host/dbname`
    - `SECRET_KEY`: Secure 32-character encryption key
    - `DEVICE_AUTH_ENABLED`: `true`
-

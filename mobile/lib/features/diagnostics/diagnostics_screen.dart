@@ -98,15 +98,15 @@ Timestamp: ${DateTime.now().toUtc().toIso8601String()}
                 ),
                 const SizedBox(height: AppTokens.space16),
 
-                Card(
+                const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(AppTokens.space16),
+                    padding: EdgeInsets.all(AppTokens.space16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Privacy & Redaction', style: AppTokens.titleMedium),
-                        const SizedBox(height: AppTokens.space8),
-                        const Text(
+                        Text('Privacy & Redaction', style: AppTokens.titleMedium),
+                        SizedBox(height: AppTokens.space8),
+                        Text(
                           'All tracking link tokens and credentials are encrypted at rest and excluded from telemetry and diagnostic reports.',
                           style: AppTokens.bodySmall,
                         ),

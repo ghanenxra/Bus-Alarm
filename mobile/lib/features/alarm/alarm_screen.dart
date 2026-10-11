@@ -62,7 +62,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppTokens.error.withOpacity(0.2),
+                      color: AppTokens.error.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTokens.radiusSmall),
                       border: Border.all(color: AppTokens.error),
                     ),
