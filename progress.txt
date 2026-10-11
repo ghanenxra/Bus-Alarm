@@ -11,5 +11,12 @@
 - Verified mobile test suite: 4/4 unit and local database tests passing in `mobile/test`.
 - Verified static analysis: 0 issues reported by `flutter analyze`.
 - Verified web release build: `mobile/build/web` compiled with 0 errors.
+- Verified Android release build: `mobile/build/app/outputs/flutter-apk/app-release.apk` (56.2MB) compiled with 0 errors.
+  - minSdkVersion: 26 (Android 8.0 Oreo)
+  - targetSdkVersion: 36 (Android 16 / latest)
+  - Multi-dex and desugaring enabled with desugar_jdk_libs:2.0.4.
+  - Cross-drive Kotlin incremental caching error resolved via `kotlin.incremental=false`.
 - Ralph agent skills (`prd` and `ralph`) installed globally and in workspace.
 ---
+
+

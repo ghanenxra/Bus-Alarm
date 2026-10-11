@@ -77,12 +77,14 @@
       "description": "As a user, I want the web bundle and Android build compiled and verified for release.",
       "acceptanceCriteria": [
         "Flutter web release bundle builds into mobile/build/web without errors",
+        "Android release APK builds with minSdkVersion 26 (Android 8.0) to latest targetSdk 36",
         "Backend runs cleanly with Uvicorn and passes all 24 test suites",
         "README.md documents all installation and verification steps"
       ],
       "priority": 6,
       "passes": true,
-      "notes": "Web release built, backend test suite 24/24 passing."
+      "notes": "Web release built in mobile/build/web, Android release APK compiled at mobile/build/app/outputs/flutter-apk/app-release.apk (minSdk 26, targetSdk 36, 56.2MB), backend test suite 24/24 passing."
     }
   ]
 }
+

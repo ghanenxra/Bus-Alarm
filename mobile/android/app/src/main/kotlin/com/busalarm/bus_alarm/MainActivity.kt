@@ -1,0 +1,5 @@
+package com.busalarm.bus_alarm
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
