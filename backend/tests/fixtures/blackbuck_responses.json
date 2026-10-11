@@ -1,0 +1,28 @@
+{
+  "valid_telemetry": {
+    "latitude": 25.184521,
+    "longitude": 75.834125,
+    "observed_at": "2026-10-11T08:00:00Z",
+    "accuracy_meters": 4.5,
+    "speed_mps": 11.2,
+    "heading_degrees": 185.0
+  },
+  "short_keys_telemetry": {
+    "lat": 25.191024,
+    "lng": 75.840212,
+    "timestamp": 1791705600,
+    "accuracy": 6.0,
+    "speed": 8.4,
+    "bearing": 90.0
+  },
+  "invalid_coordinates": {
+    "latitude": 195.0,
+    "longitude": 75.834125,
+    "observed_at": "2026-10-11T08:00:00Z"
+  },
+  "null_island": {
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "observed_at": "2026-10-11T08:00:00Z"
+  }
+}

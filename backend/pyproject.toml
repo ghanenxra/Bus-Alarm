@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bus-alarm-backend"
+version = "1.0.0"
+description = "FastAPI backend for Bus Alarm GPS monitoring service"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+    "sqlalchemy>=2.0.30",
+    "alembic>=1.13.0",
+    "httpx>=0.27.0",
+    "pyjwt>=2.8.0",
+    "cryptography>=43.0.0",
+    "python-dotenv>=1.0.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
