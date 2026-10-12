@@ -16,6 +16,8 @@
   - targetSdkVersion: 36 (Android 16 / latest)
   - Multi-dex and desugaring enabled with desugar_jdk_libs:2.0.4.
   - Cross-drive Kotlin incremental caching error resolved via `kotlin.incremental=false`.
+- Embedded permanent production backend URL `https://bus-alarm.onrender.com` into app with automatic local cache migration.
+- Re-compiled Android release APK and Web release bundle with embedded production URL.
 - Ralph agent skills (`prd` and `ralph`) installed globally and in workspace.
 ---
 

@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class EnvConfig {
-  static String get defaultBaseUrl =>
-      kIsWeb ? 'http://localhost:8000' : 'http://10.0.2.2:8000';
+  static const String defaultBaseUrl = 'https://bus-alarm.onrender.com';
   
   static SharedPreferences? _prefs;
   static String installationId = 'default-device-install-id';
@@ -34,7 +32,18 @@ class EnvConfig {
 
     deviceId = _prefs?.getString('device_id');
     fcmToken = _prefs?.getString('fcm_token');
-    baseUrl = _prefs?.getString('backend_url') ?? defaultBaseUrl;
+
+    final storedUrl = _prefs?.getString('backend_url');
+    // Auto-migrate previous localhost or emulator dev URLs to permanent production Render backend
+    if (storedUrl == null ||
+        storedUrl.isEmpty ||
+        storedUrl.contains('localhost') ||
+        storedUrl.contains('10.0.2.2')) {
+      baseUrl = defaultBaseUrl;
+      await _prefs?.setString('backend_url', defaultBaseUrl);
+    } else {
+      baseUrl = storedUrl;
+    }
   }
 
   static Future<void> setDeviceId(String id) async {
