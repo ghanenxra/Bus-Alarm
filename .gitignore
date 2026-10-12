@@ -1,6 +1,5 @@
 # Environment and secrets
-.env
-*.env
+# .env tracked for deployment configuration
 *.pem
 *.key
 serviceAccountKey.json
